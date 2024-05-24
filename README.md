@@ -18,6 +18,9 @@ enable-rcon=true
 rcon.password=<rcon pwd>
 ```
 
+## backup.sh
+A small edit to [nicolaschan/minecraft-backup](https://github.com/nicolaschan/minecraft-backup)'s backup script that drops the quiet flag from restic commands
+
 ## server.sh
 
 Place in the server directory and edit the JAR and RAM settings to suit
