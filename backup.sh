@@ -405,18 +405,21 @@ delete-thinning () {
 
 delete-restic-sequential () {
   if [ "$MAX_BACKUPS" -ge 0 ]; then
-    restic forget -r "$RESTIC_REPO" --keep-last "$MAX_BACKUPS" "$QUIET"
+#    restic forget -r "$RESTIC_REPO" --keep-last "$MAX_BACKUPS" "$QUIET"
+    restic forget -r "$RESTIC_REPO" --keep-last "$MAX_BACKUPS"
   fi
 }
 
 delete-restic-thinning () {
   if [ "$MAX_BACKUPS" -ge 70 ]; then 
     # MAX_BACKUPS >= 70
-    restic forget -r "$RESTIC_REPO" --keep-last 16 --keep-hourly 24 --keep-daily 30 --keep-weekly $((MAX_BACKUPS - 70)) "$QUIET"
-  else 
+#    restic forget -r "$RESTIC_REPO" --keep-last 16 --keep-hourly 24 --keep-daily 30 --keep-weekly $((MAX_BACKUPS - 70)) "$QUIET"
+    restic forget -r "$RESTIC_REPO" --keep-last 16 --keep-hourly 24 --keep-daily 30 --keep-weekly $((MAX_BACKUPS - 70))
+else 
     # We have a check that MAX_BACKUPS is not 70 > MAX_BACKUPS >= 0, so we can assume here it is negative
     # Negative means don't delete old snapshots
-    restic forget -r "$RESTIC_REPO" --keep-last 16 --keep-hourly 24 --keep-daily 30 --keep-weekly 9999999 "$QUIET"
+#    restic forget -r "$RESTIC_REPO" --keep-last 16 --keep-hourly 24 --keep-daily 30 --keep-weekly 9999999 "$QUIET"
+    restic forget -r "$RESTIC_REPO" --keep-last 16 --keep-hourly 24 --keep-daily 30 --keep-weekly 9999999
   fi
 }
 
@@ -529,7 +532,8 @@ do-backup () {
     else
       RESTIC_HOSTNAME_OPTION=("--host" "$RESTIC_HOSTNAME")
     fi
-    restic backup -r "$RESTIC_REPO" "${SERVER_WORLDS[@]}" --time "$RESTIC_TIMESTAMP" "$QUIET" "${RESTIC_HOSTNAME_OPTION[@]}"
+#    restic backup -r "$RESTIC_REPO" "${SERVER_WORLDS[@]}" --time "$RESTIC_TIMESTAMP" "$QUIET" "${RESTIC_HOSTNAME_OPTION[@]}"
+    restic backup -r "$RESTIC_REPO" "${SERVER_WORLDS[@]}" --time "$RESTIC_TIMESTAMP" "${RESTIC_HOSTNAME_OPTION[@]}"
     ARCHIVE_EXIT_CODE=$?
     if [ "$ARCHIVE_EXIT_CODE" -eq 3 ]; then
       log-warning "Incomplete snapshot taken (some files could not be read)"
