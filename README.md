@@ -52,8 +52,8 @@ Set rcon password to match, and set a restic
 # Minecraft backup (hourly)
 0 * * * * /home/ubuntu/scripts/mcctl.sh backup >> /var/log/mcctl/mcctl.log 2>&1
 
-# Prune dropped backups (mondays 0030)
-30 0 * * 1 /home/ubuntu/scripts/mcctl.sh prune >> /var/log/mcctl/mcctl.log 2>&1
+# Prune dropped backups (daily 0030)
+30 0 * * * /home/ubuntu/scripts/mcctl.sh prune >> /var/log/mcctl/mcctl.log 2>&1
 
 # Restart active server (0430)
 30 4 * * * /home/ubuntu/scripts/mcctl.sh restart >> /var/log/mcctl/mcctl.log 2>&1
